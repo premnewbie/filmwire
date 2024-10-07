@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-
 import MovieCard from "./MovieCard";
 import SearchIcon from "./search.svg";
+import axios from "axios";
 
 const API_URL = "http://www.omdbapi.com?apikey=b6003d8a";
 
@@ -11,14 +11,10 @@ const App = () => {
 
   useEffect(() => {
     searchMovies("Batman");
-    console.log(movies)
   }, []);
 
   const searchMovies = async (title) => {
-    const response = await fetch(`${API_URL}&s=${title}`);
-    const data = await response.json();
-
-    setMovies(data.Search);
+    await axios.get(`${API_URL}&s=${title}`).then(res => setMovies(res.json().Search));
   };
 
   return (
